@@ -1,6 +1,6 @@
 //
 //  QMMemLeakMonitor.h
-//  QQMusic
+//  
 //
 //  
 //
