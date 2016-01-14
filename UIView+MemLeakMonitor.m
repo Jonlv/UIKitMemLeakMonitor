@@ -7,7 +7,7 @@
 //
 
 #import "UIView+MemMonitor.h"
-#import "QMMemMonitor.h"
+#import "QMMemLeakMonitor.h"
 
 #define VIEW_MONITOR_INTERVAL_TIME 10.f
 
@@ -15,7 +15,7 @@
 
 - (void)willDealloc:(NSString *)fromVC
 {
-    if (![[QMMemMonitor sharedInstance] IfViewInWhiteList:self]) {
+    if (![[QMMemLeakMonitor sharedInstance] IfViewInWhiteList:self]) {
         __weak UIView *weakSelf = self;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(VIEW_MONITOR_INTERVAL_TIME * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf checkIfDealloc:fromVC];
@@ -23,7 +23,7 @@
     }
     for (UIView *view in self.subviews)
     {
-        if (![[QMMemMonitor sharedInstance] IfViewInWhiteList:self])
+        if (![[QMMemLeakMonitor sharedInstance] IfViewInWhiteList:view])
         {
             [view willDealloc:fromVC];
         }
